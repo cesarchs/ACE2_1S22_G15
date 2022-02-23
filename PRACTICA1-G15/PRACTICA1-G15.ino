@@ -1,11 +1,7 @@
 //LIBRERIAS PARA SENSOR DE TENPERATURA
-#include "DHT.h"
-#include <Adafruit_Sensor.h>
 
 //-----------------------RESPUESTA A MANDAR A LA API -------------------------
-
 String data;
-
 //----------------------------------------------------------------------------
                  // VARIABLES PARA CADA SENSOR DE TEMPERARUTA
 float dht_temperatura;
@@ -19,29 +15,29 @@ int Co2;
 //----------------------------------------------------------------------------
 
 // PIN SENSOR DE HUMEDAD EN EL SUELO 
-int SensorPinHumedad = A0;
+int SensorPinHumedad = A15;
 
 // SENSOR DE TEMPERATURA esta conectado al pin D2, D4
-const int dht_pin = 2;
-const int dht_pin2 = 4;
+const int dht_pin = A2;
+const int dht_pin2 = A4;
 
 const int dht_tipo = DHT11;
 
-DHT dht(dht_pin, dht_tipo);
-DHT dht2(dht_pin2, dht_tipo);
+//DHT dht(dht_pin, dht_tipo);
+//DHT dht2(dht_pin2, dht_tipo);
 
 // SENSOR DE LUZ ----------------------------------------
 
-const int ldr_pin = 7;
+const int ldr_pin = A7;
 
 // SENSOR DE CO2--------------------------------------------
-int SensorPinCO2 = A1;
+int SensorPinCO2 = A0;
 
 
 //----------------------------------------------------------------------------
 void setup() {
   // INICIALIZACION DE PINES
-  pinMode (ldr_pin, INPUT);
+  //pinMode (ldr_pin, INPUT);
   //pinMode (dht_pin, INPUT);
   //pinMode (dht_pin2, INPUT);
   
@@ -49,7 +45,7 @@ void setup() {
   Serial.begin(9600);
 
   //INICIALIZAMOS SENSOR DE TEMPERATURA 
-  dht.begin();
+  //dht.begin();
   
 }
 
@@ -89,23 +85,19 @@ void loop() {
 float getTemperaturaInterior (){
   
   // Lee los valores de humedad y temperatura
-  //float dht_humedad = dht.readHumidity(); 
-  float dht_temperatura = dht.readTemperature();
-
-  // Envia las lecturas
-  //Serial.print(dht_humedad); el porcentaje
-  //Serial.print(dht_temperatura); // en centigrados 
-
-  return dht_temperatura;
+  float dht_temperatura = analogRead(dht_pin);
+  float temperatura = (dht_temperatura * 2.0 * 100.0)/1023.0;
+  return temperatura;
 }
 
 // SENSOR DE TEMPERATURA 2
 float getTemperaturaExterior (){
   
   // Lee los valores de temperatura
-  float dht_temperatura2 = dht2.readTemperature();
-
-  return dht_temperatura2;
+  //float dht_temperatura2 = dht2.readTemperature();
+  float dht_temperatura2 = analogRead(dht_pin2);
+  float temperatura2 = (dht_temperatura2 * 2.0 * 100.0)/1023.0;
+  return temperatura2;
 }
 
 // SENSOR DE HUMEDAD EN TIERRA 
@@ -113,7 +105,6 @@ float getTemperaturaExterior (){
  int getHumedad() {  
   //obtenemos valor analogo del sensor de humedad
    int humedad = analogRead(SensorPinHumedad);
-   
    return humedad;
  }
 
@@ -121,15 +112,13 @@ float getTemperaturaExterior (){
 
 int getLuz () {
   // obtenemos valor digital del sensor de luz
-  luz = digitalRead (ldr_pin);
-
+  luz = analogRead (ldr_pin);
   return luz;
 }
 
 // SENSOR DE CO2, MEDIMOS LA CALIDAD DEL AIRE
 
 int getCo2 (){
-  Co2 = analogRead(SensorPinCO2); 
-
+  Co2 = analogRead(SensorPinCO2);  
   return Co2;
 }
