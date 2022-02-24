@@ -7,11 +7,11 @@ String data;
 float dht_temperatura;
 float dht_temperatura2;
                 // VARIABLE PARA SENSOR DE HUMEDAD EN LA TIERRA
-int humedad;
+float humedad;
                 // VARIABLES PARA SENSOR DE LUZ
 float luz;
                 // VARIABLES PARA SENSOR DE CO2
-int Co2;
+float Co2;
 //----------------------------------------------------------------------------
 
 // PIN SENSOR DE HUMEDAD EN EL SUELO 
@@ -21,14 +21,13 @@ int SensorPinHumedad = A15;
 const int dht_pin = A2;
 const int dht_pin2 = A4;
 
-const int dht_tipo = DHT11;
 
 //DHT dht(dht_pin, dht_tipo);
 //DHT dht2(dht_pin2, dht_tipo);
 
 // SENSOR DE LUZ ----------------------------------------
 
-const int ldr_pin = A7;
+const int ldr_pin = A9;
 
 // SENSOR DE CO2--------------------------------------------
 int SensorPinCO2 = A0;
@@ -59,7 +58,7 @@ void loop() {
   Co2 = 0;
   //-------------------------------------------------------
   // Espera 2 segundos para que finalice la conversion
-  delay(2000);
+  delay(10000);
 
   // RECOLECCION DE DATA Y DISEÑO DE ENVIO DE DATOS
 
@@ -119,6 +118,10 @@ int getLuz () {
 // SENSOR DE CO2, MEDIMOS LA CALIDAD DEL AIRE
 
 int getCo2 (){
-  Co2 = analogRead(SensorPinCO2);  
-  return Co2;
+  Co2 = analogRead(SensorPinCO2);
+  char offset_calibracion[100];
+  int offset_calibracion_convertido = atoi(offset_calibracion);
+  int offstet_mq_135 = 400;  
+  int t = Co2 + offstet_mq_135 + offset_calibracion_convertido;
+  return t;
 }
