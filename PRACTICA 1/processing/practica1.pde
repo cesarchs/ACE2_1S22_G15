@@ -1,7 +1,9 @@
 import meter.*;
 
 Meter m, n;
-
+JSONObject json;
+Drop2[] drops2;
+int totalDrops = 0; 
 void setup(){
   size(1280, 790);
   background(255);
@@ -28,9 +30,30 @@ void setup(){
   m.setMaxInputSignal(100);
   n.setMaxInputSignal(100);
   //noLoop();
+  drops2 = new Drop2[1000]; 
 }
 
 void draw() {
+  background(255);
+  json = loadJSONObject("http://localhost:8080/last/data");
+  int temp_ext = json.getInt("Temp_Ext");
+  int temp_int = json.getInt("Temp_Int");
+  int humedad = json.getInt("Humedad");
+  if (totalDrops < drops2.length) {
+        drops2[totalDrops] = new Drop2();
+        totalDrops++;
+   }
+   if(humedad<900){
+     for (int i = 0; i < totalDrops; i++ ){
+     drops2[i].color2(humedad);
+   }
+   }
+   
+   for (int i = 0; i < totalDrops; i++ ) {
+        drops2[i].move();
+        drops2[i].display();
+      }
+  //------------------------------------------------
   int margen = 0;
   for(int i = 0; i < 3; i++) {
     margen += 20;
@@ -42,9 +65,9 @@ void draw() {
     printCard2(margen, 400, 500, 350);
     margen += 500 + 190;
   }
-  m.updateMeter(int(random(101)));
-  n.updateMeter(int(random(101)));
-  delay(1000);
+  m.updateMeter(temp_int);
+  n.updateMeter(temp_ext);
+  delay(100);
 }
 
 void printCard(int x, int y, int area) {
