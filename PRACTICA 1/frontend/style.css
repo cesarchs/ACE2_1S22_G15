@@ -1,0 +1,43 @@
+.container-graphs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 47% 47%;
+    grid-template-rows: 1fr;
+    column-gap: 30px;
+}
+
+.center-txt {
+    text-align: center;
+}
+
+.max-height-50 {
+    max-height: 50%;
+}
+
+.test {
+    background: blue;
+    width: 100%;
+}
+
+.input-day {
+    padding-top: 2rem;
+    padding-left: 4rem;
+    padding-bottom: 4rem;
+}
+
+.input-day input, button {
+    padding: 5px;
+}
+
+.input-day input {
+    width: 20%;
+    margin-left: 5px;
+}
+
+.input-day button {
+    margin-left: 15px;
+}
+
+.input-day button {
+    height: 100%;
+}
