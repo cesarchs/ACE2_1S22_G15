@@ -1,3 +1,4 @@
+
 class Drop2 {
   float x, y;   // variables ubicación gotas
   float speed;  // velocidad gotas
@@ -9,7 +10,7 @@ class Drop2 {
   Drop2() {
     r = random(7, 12);       // Las gotitas son de tamaño random
     x = random(width);       // Start with a random x location
-    y = -r*4;                // Start a little above the window
+    y = 600;                // Start a little above the window
     speed = random(2, 10);    // Velocidad random entre 2-5
     c = color(255);   
   }
@@ -19,8 +20,8 @@ class Drop2 {
     y += speed;   // Aumenta velocidad
   }
 
-  boolean reachedBottom() {
-    if (y > height + r*4) { 
+    boolean reachedBottom() {
+    if (y > 500 + r*4) { 
       return true;
     } else {
       return false;

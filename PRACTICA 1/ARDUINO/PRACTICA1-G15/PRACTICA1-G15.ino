@@ -58,7 +58,7 @@ void loop() {
   Co2 = 0;
   //-------------------------------------------------------
   // Espera 2 segundos para que finalice la conversion
-  delay(10000);
+  delay(1000);
 
   // RECOLECCION DE DATA Y DISEÑO DE ENVIO DE DATOS
 

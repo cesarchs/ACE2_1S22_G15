@@ -1,9 +1,9 @@
 const  mysqlClient = require("mysql");
 
 const conexion = mysqlClient.createConnection({
-    host: '127.0.0.1',
+    host: 'localhost',
     user: 'root',
-    password: 'admin',
+    password: 'ayd111',
     database: 'practica1',
     port: 3306
 })
