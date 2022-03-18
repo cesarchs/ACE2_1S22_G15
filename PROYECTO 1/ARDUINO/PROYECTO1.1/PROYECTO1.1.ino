@@ -30,7 +30,7 @@ const float VelSon = 34000.0;
 
 
 // Número de muestras
-const int numLecturas = 100;
+const int numLecturas = 10;
 
 
  // --------------- DISTANCIAS MEDIDAS -------------------
@@ -70,15 +70,26 @@ void loop()
 {
  data = ""; 
  humedad = 0;
- 
- data.concat(getDistancia());
- data.concat(",");
- data.concat(getHumedad());
- data.concat(",");
- 
- data.concat(";");
+ if (lecturaActual>9){
+  
+  data.concat(getDistancia());
+  data.concat(",");
+  data.concat(getHumedad());
+  data.concat(",");
+  data.concat(getEstadoAguaVivienda());
+  data.concat(",");
+  data.concat(getEstadoAguaFiltrada());
+  data.concat(";");
 
- Serial.println(data);
+
+  //################# ENVIO DE DATA POR PUERTO SERIAL#####################################
+  Serial.println(data);
+  //######################################################################################
+ }
+ else {
+  getDistancia();
+ }
+
 }
 
 
@@ -145,16 +156,16 @@ float getDistancia (){
     return cantidadLiquido;// ml
   }
  
-  delay(500);
+  delay(100);
 }
 
 // #############################################################################
 
 // SENSOR DE HUMEDAD EN TIERRA 
 
- int getHumedad() {  
+ float getHumedad() {  
   //obtenemos valor analogo del sensor de humedad
-   int humedad = analogRead(SensorPinHumedad);
+   float humedad = analogRead(SensorPinHumedad);
    return humedad;
  }
 
