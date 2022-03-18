@@ -12,6 +12,10 @@ const int PinEcho = 6;
 // PIN SENSOR DE HUMEDAD EN EL SUELO 
 int SensorPinHumedad = A15;
 
+// PIN FOTODIODOS 
+const int lightSensorPin = A0;
+const int lightSensorPin2 = A1;
+
 //########################################################
 // ############## VARIABLES ##############################
 // #######################################################
@@ -155,3 +159,23 @@ float getDistancia (){
  }
 
 //#############################################################################
+
+// SENSOR DE AGUA SUCIA FOTODIODO 1
+
+ float getEstadoAguaVivienda(){
+  float lightSensorReading1 = 0;
+  lightSensorReading1 = analogRead(lightSensorPin);
+
+  return lightSensorReading1;
+ }
+
+ //#############################################################################
+
+// SENSOR DE SUCIEDAD EN AGUA LIMPIA FOTODIODO 2
+
+ float getEstadoAguaFiltrada(){
+  float lightSensorReading2 = 0;
+  lightSensorReading2 = analogRead(lightSensorPin2);
+
+  return lightSensorReading2;
+ }
