@@ -9,22 +9,33 @@ String data;
 const int PinTrig = 7;
 const int PinEcho = 6;
 
+// PIN SENSOR DE HUMEDAD EN EL SUELO 
+int SensorPinHumedad = A15;
+
 //########################################################
-//---------- VELOCIDAD -----------------------------------
+// ############## VARIABLES ##############################
+// #######################################################
+
+ //----- VARIABLE PARA SENSOR DE HUMEDAD EN LA TIERRA ----
+ 
+float humedad;
+
+//----------------------- VELOCIDAD ---------------------
 // Constante velocidad sonido en cm/s
 const float VelSon = 34000.0;
 
- //#######################################################
+
 // Número de muestras
 const int numLecturas = 100;
 
-// #########################################################
+
  // --------------- DISTANCIAS MEDIDAS -------------------
 // Distancia a los 100 ml y vacío 
 const float distancia100 = 2.15;
 const float distanciaVacio = 11.41;
 
 //########################################################
+// VARIABLES PARA CONTROL DE CANTIDAD DE AGUA EN EL RECIPIENTE
 
 float lecturas[numLecturas]; // Array para almacenar lecturas
 int lecturaActual = 0; // Lectura por la que vamos
@@ -53,9 +64,22 @@ void setup()
 
 void loop()
 {
- getDistancia();
-}
+ data = ""; 
+ humedad = 0;
  
+ data.concat(getDistancia());
+ data.concat(",");
+ data.concat(getHumedad());
+ data.concat(",");
+ 
+ data.concat(";");
+
+ Serial.println(data);
+}
+
+
+// #####################################################################################
+
 // Método que inicia la secuencia del Trigger para comenzar a medir
 void iniciarTrigger()
 {
@@ -71,7 +95,10 @@ void iniciarTrigger()
   digitalWrite(PinTrig, LOW);
 }
 
-int getDistancia (){
+
+// ####################################################################################
+// SENSOR ULTRASONICO
+float getDistancia (){
   
     // Eliminamos la última medida
   total = total - lecturas[lecturaActual];
@@ -110,12 +137,21 @@ int getDistancia (){
     float distanciaLleno = distanciaVacio - media;
     float cantidadLiquido = distanciaLleno * 100 / distancia100;
  
-    Serial.print(media);
-    Serial.println(" cm");
     
-    Serial.print(cantidadLiquido);
-    Serial.println(" ml");
+    return cantidadLiquido;// ml
   }
  
   delay(500);
 }
+
+// #############################################################################
+
+// SENSOR DE HUMEDAD EN TIERRA 
+
+ int getHumedad() {  
+  //obtenemos valor analogo del sensor de humedad
+   int humedad = analogRead(SensorPinHumedad);
+   return humedad;
+ }
+
+//#############################################################################
