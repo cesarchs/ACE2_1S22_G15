@@ -29,23 +29,10 @@ float humedad;
 const float VelSon = 34000.0;
 
 
-// Número de muestras
-const int numLecturas = 10;
-
-
  // --------------- DISTANCIAS MEDIDAS -------------------
 // Distancia a los 100 ml y vacío 
 const float distancia100 = 2.15;
 const float distanciaVacio = 11.41;
-
-//########################################################
-// VARIABLES PARA CONTROL DE CANTIDAD DE AGUA EN EL RECIPIENTE
-
-float lecturas[numLecturas]; // Array para almacenar lecturas
-int lecturaActual = 0; // Lectura por la que vamos
-float total = 0; // Total de las que llevamos
-float media = 0; // Media de las medidas
-bool primeraMedia = false; // Para saber que ya hemos calculado por lo menos una
 
 
 //##########################################################################################
@@ -58,19 +45,13 @@ void setup()
   pinMode(PinTrig, OUTPUT);
   // Ponemos el pin Echo en modo entrada
   pinMode(PinEcho, INPUT);
- 
-  // Inicializamos el array
-  for (int i = 0; i < numLecturas; i++)
-  {
-    lecturas[i] = 0;
-  }
+
 }
 
 void loop()
 {
  data = ""; 
  humedad = 0;
- if (lecturaActual>9){
   
   data.concat(getDistancia());
   data.concat(",");
@@ -85,10 +66,6 @@ void loop()
   //################# ENVIO DE DATA POR PUERTO SERIAL#####################################
   Serial.println(data);
   //######################################################################################
- }
- else {
-  getDistancia();
- }
 
 }
 
@@ -114,9 +91,6 @@ void iniciarTrigger()
 // ####################################################################################
 // SENSOR ULTRASONICO
 float getDistancia (){
-  
-    // Eliminamos la última medida
-  total = total - lecturas[lecturaActual];
  
   iniciarTrigger();
  
@@ -126,37 +100,13 @@ float getDistancia (){
   // Obtenemos la distancia en cm, hay que convertir el tiempo en segudos ya que está en microsegundos
   // por eso se multiplica por 0.000001
   float distancia = tiempo * 0.000001 * VelSon / 2.0;
- 
-  // Almacenamos la distancia en el array
-  lecturas[lecturaActual] = distancia;
- 
-  // Añadimos la lectura al total
-  total = total + lecturas[lecturaActual];
- 
-  // Avanzamos a la siguiente posición del array
-  lecturaActual = lecturaActual + 1;
- 
-  // Comprobamos si hemos llegado al final del array
-  if (lecturaActual >= numLecturas)
-  {
-    primeraMedia = true;
-    lecturaActual = 0;
-  }
- 
-  // Calculamos la media
-  media = total / numLecturas;
- 
-  // Solo mostramos si hemos calculado por lo menos una media
-  if (primeraMedia){
     
-    float distanciaLleno = distanciaVacio - media;
-    float cantidadLiquido = distanciaLleno * 100 / distancia100;
- 
-    
-    return cantidadLiquido;// ml
-  }
- 
-  delay(100);
+  float distanciaLleno = distanciaVacio - distancia;
+  float cantidadLiquido = distanciaLleno * 100 / distancia100;
+  
+  return cantidadLiquido;// ml
+
+  delay(500);
 }
 
 // #############################################################################
