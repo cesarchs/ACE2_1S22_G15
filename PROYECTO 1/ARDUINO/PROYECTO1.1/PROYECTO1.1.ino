@@ -31,8 +31,8 @@ const float VelSon = 34000.0;
 
  // --------------- DISTANCIAS MEDIDAS -------------------
 // Distancia a los 100 ml y vacío 
-const float distancia100 = 2.15;
-const float distanciaVacio = 11.41;
+const float distancia100 = 4.15;
+const float distanciaVacio = 15.41;
 
 
 //##########################################################################################
@@ -52,6 +52,9 @@ void loop()
 {
  data = ""; 
  humedad = 0;
+
+ 
+  iniciarTrigger();
   
   data.concat(getDistancia());
   data.concat(",");
@@ -66,7 +69,7 @@ void loop()
   //################# ENVIO DE DATA POR PUERTO SERIAL#####################################
   Serial.println(data);
   //######################################################################################
-
+  delay(5000);
 }
 
 
@@ -92,7 +95,6 @@ void iniciarTrigger()
 // SENSOR ULTRASONICO
 float getDistancia (){
  
-  iniciarTrigger();
  
   // La función pulseIn obtiene el tiempo que tarda en cambiar entre estados, en este caso a HIGH
   unsigned long tiempo = pulseIn(PinEcho, HIGH);
@@ -100,11 +102,15 @@ float getDistancia (){
   // Obtenemos la distancia en cm, hay que convertir el tiempo en segudos ya que está en microsegundos
   // por eso se multiplica por 0.000001
   float distancia = tiempo * 0.000001 * VelSon / 2.0;
+  
     
   float distanciaLleno = distanciaVacio - distancia;
   float cantidadLiquido = distanciaLleno * 100 / distancia100;
   
-  return cantidadLiquido;// ml
+  //return cantidadLiquido;// ml
+  return 3000-(distancia*218.51);
+
+  
 
   delay(500);
 }
@@ -116,7 +122,9 @@ float getDistancia (){
  float getHumedad() {  
   //obtenemos valor analogo del sensor de humedad
    float humedad = analogRead(SensorPinHumedad);
-   return humedad;
+   float res = map(humedad,0,1023,1023,0);
+   res = res/10;
+   return res;
  }
 
 //#############################################################################
@@ -126,8 +134,8 @@ float getDistancia (){
  float getEstadoAguaVivienda(){
   float lecturaFotodiodo1 = 0;
   lecturaFotodiodo1 = analogRead(PinSensorFotodiodo1);
-
-  return lecturaFotodiodo1;
+  float res = (lecturaFotodiodo1*100)/350;
+  return res;
  }
 
  //#############################################################################
@@ -137,6 +145,6 @@ float getDistancia (){
  float getEstadoAguaFiltrada(){
   float lecturaFotodiodo2 = 0;
   lecturaFotodiodo2 = analogRead(PinSensorFotodiodo2);
-
-  return lecturaFotodiodo2;
+  float res = (lecturaFotodiodo2*100)/350;
+  return res;
  }

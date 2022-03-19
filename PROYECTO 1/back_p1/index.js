@@ -6,7 +6,7 @@ const cors = require("cors");
 const mysqlController = require("./mysql_p1");
 
 
-const port = new SerialPort("COM3", { baudRate: 9600 });
+const port = new SerialPort("COM4", { baudRate: 9600 });
 const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
 /**
  * App Variables 3
