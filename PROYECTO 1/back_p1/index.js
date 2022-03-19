@@ -2,6 +2,8 @@ const SerialPort = require("serialport");
 const ReadLine = require("@serialport/parser-readline");
 const express = require("express");
 const cors = require("cors");
+const { Server } = require('socket.io');
+const http = require('http');
 
 const mysqlController = require("./mysql_p1");
 
@@ -13,6 +15,14 @@ const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
  */
  const port2 = 8080;
  const app = express();
+ const server = http.createServer(app);
+ const io = new Server(server, {
+   cors: {
+     origin: '*',
+     methods: ['GET', 'POST']
+   }
+ });
+
  /**
   *  App Configuration
   */
@@ -35,7 +45,18 @@ port.on("open", () => {
 
 parser.on("data", (data) => {
   mysqlController.insert(data);
+  const arrayDatos = data.split(',');
+  io.emit('data', {
+    dirtInWater: arrayDatos[2],
+    debtOnGround: arrayDatos[1],
+    dirtInPostFiltered: arrayDatos[3].replace(';',''),
+    storeWater: arrayDatos[0]
+  });
 	//console.log(data);
+});
+
+io.on('connection', () => {
+  console.log('User connected to socket');
 });
 
 
@@ -78,6 +99,6 @@ app.get('/last/data', async (req, res) => {
   res.status(500).json({});
 });
 
-app.listen(port2, () => {
+server.listen(port2, () => {
     console.log(`Listening to requests on http://localhost:${port2}`);
   });
