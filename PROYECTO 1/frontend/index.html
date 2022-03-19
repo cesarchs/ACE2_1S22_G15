@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
+    <title>Proyecto 1</title>
+</head>
+<body>
+    <div class="container w-11/12 mx-auto pt-16 md:">
+        <h1 class="text-2xl">Magnitudes</h1>
+        <div class="grid lg:grid-cols-4 gap-2 grid-cols-2" id="app">
+            <div class="border rounded shadow-lg p-2">
+                <h2 class="w-full">Cantidad de susciedad en el agua</h2>
+                <div class="p-10">
+                    <h2 class="sm:text-6xl text-center text-4xl">{{ dirtInWater }}<span class="text-sm">fotodiodos</span></h2>
+                </div>
+            </div>
+            <div class="border rounded shadow-lg p-2">
+                <h2 class="w-full">Humedad en el suelo</h2>
+                <div class="p-10">
+                    <h2 class="sm:text-6xl text-center text-4xl">{{ debtOnGround }}%</h2>
+                </div>
+            </div>
+            <div class="border rounded shadow-lg p-2">
+                <h2 class="w-full">Cantidad de susciedad en el agua postfiltrada</h2>
+                <div class="p-10">
+                    <h2 class="sm:text-6xl text-center text-4xl">{{ dirtInPostFiltered }}<span class="text-sm">fotodiodos</span></h2>
+                </div>
+            </div>
+            <div class="border rounded shadow-lg p-2">
+                <h2 class="w-full">Cantidad de agua almacenada</h2>
+                <div class="p-10">
+                    <h2 class="sm:text-6xl text-center text-4xl">{{ storeWater }}<span class="text-2xl">cm/s</span></h2>
+                </div>
+            </div>
+        </div>
+        <h1 class="text-2xl pt-6">Graficas</h1>
+        <div class="border rounded shadow-lg grid lg:grid-cols-2 gap-5 p-10 mb-6">
+            <div class="lg:col-span-2 w-full">
+                <label for="day">Fecha: </label>
+                <input class="ml-4 border border-black p-1" type="date" name="day" id="day">
+                <button class="border border-black p-1 ml-4 bg-zinc-100" onclick="getDataForGraphs()">Ver reporte</button>
+            </div>
+            <hr class="lg:col-span-2 w-full border">
+            <div class="w-full">
+                <canvas id="chart1"></canvas>
+            </div>
+            <div class="w-full">
+                <canvas id="chart2"></canvas>
+            </div>
+            <div class="w-full">
+                <canvas id="chart3"></canvas>
+            </div>
+            <div class="w-full">
+                <canvas id="chart4"></canvas>
+            </div>
+            <div class="w-full lg:col-span-2">
+                <canvas id="chart5"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+    <script src="vuejs-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
