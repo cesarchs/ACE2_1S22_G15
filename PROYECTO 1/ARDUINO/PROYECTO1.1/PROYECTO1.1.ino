@@ -69,7 +69,7 @@ void loop()
   //################# ENVIO DE DATA POR PUERTO SERIAL#####################################
   Serial.println(data);
   //######################################################################################
-  delay(5000);
+  delay(10000);
 }
 
 
@@ -108,7 +108,7 @@ float getDistancia (){
   float cantidadLiquido = distanciaLleno * 100 / distancia100;
   
   //return cantidadLiquido;// ml
-  return 3000-(distancia*218.51);
+  return 3000-(distancia*221.51);
 
   
 
@@ -134,7 +134,7 @@ float getDistancia (){
  float getEstadoAguaVivienda(){
   float lecturaFotodiodo1 = 0;
   lecturaFotodiodo1 = analogRead(PinSensorFotodiodo1);
-  float res = (lecturaFotodiodo1*100)/350;
+  float res = (lecturaFotodiodo1*100)/20;
   return res;
  }
 
@@ -145,6 +145,6 @@ float getDistancia (){
  float getEstadoAguaFiltrada(){
   float lecturaFotodiodo2 = 0;
   lecturaFotodiodo2 = analogRead(PinSensorFotodiodo2);
-  float res = (lecturaFotodiodo2*100)/350;
+  float res = (lecturaFotodiodo2*100)/20;
   return res;
  }
