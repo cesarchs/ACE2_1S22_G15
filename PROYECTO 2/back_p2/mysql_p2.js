@@ -72,9 +72,33 @@ function getLastData() {
     });
 }
 
+
+function getLastEncendido(){
+    const query = 'SELECT * FROM datos WHERE encendido=1 ORDER BY fecha_completa DESC LIMIT 1';
+    return new Promise((resolve, reject) => {
+        conexion.query(query, function(err, res) {
+            if(err) return reject(err);
+            resolve(res);
+        });
+    });
+}
+
+function getLastApagado(){
+    const query = 'SELECT * FROM datos WHERE apagado=1 ORDER BY fecha_completa DESC LIMIT 1';
+    return new Promise((resolve, reject) => {
+        conexion.query(query, function(err, res) {
+            if(err) return reject(err);
+            resolve(res);
+        });
+    });
+}
+
+
 module.exports={
     getday,
     insert,
     getDataBydate,
-    getLastData
+    getLastData,
+    getLastEncendido,
+    getLastApagado
 }
