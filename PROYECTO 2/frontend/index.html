@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stlyes.css">
+    <title>Proyecto 2</title>
+</head>
+<body>
+    <div class="container" id="app">
+        <h2 class="title-section">Magnitudes</h2>
+        <div class="card">
+            <p>Cantidad de metano dentro del sistema</p>
+            <div class="card__values">
+                <h3>{{ methane }}</h3>
+                <p>ppm</p>
+            </div>
+        </div>
+        <div class="card">
+            <p>Temperatura dentro del tanque</p>
+            <div class="card__values">
+                <h3>{{ temperature }}</h3>
+                <p>°C</p>
+            </div>
+        </div>
+        <h2 class="title-section">Gráficas</h2>
+        <div class="input-data">
+            <label>Fecha:</label>
+            <input type="date" id="input-date" />
+            <button id="btn-filter">Filtrar</button>
+        </div>
+        <div>
+            <h3>Cantidad de metano vs tiempo</h3>
+            <canvas id="chart1"></canvas>
+        </div>
+        <div>
+            <h3>Temperatura del tanque biogás vs tiempo</h3>
+            <canvas id="chart2"></canvas>
+        </div>
+        <div>
+            <h3>Cantidad de metano vs temperatura</h3>
+            <canvas id="chart3"></canvas>
+        </div>
+        <div class="card time-elapsed">
+            <p>Tiempo de uso</p>
+            <div class="card__values">
+                <h3>0s</h3>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
