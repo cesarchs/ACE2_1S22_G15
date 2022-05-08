@@ -46,12 +46,10 @@ port.on("open", () => {
 parser.on("data", (data) => {
   mysqlController.insert(data);
   const arrayDatos = data.split(',');
-  /*io.emit('data', {
-    dirtInWater: arrayDatos[2],
-    debtOnGround: arrayDatos[1],
-    dirtInPostFiltered: arrayDatos[3].replace(';',''),
-    storeWater: arrayDatos[0]
-  });*/
+  io.emit('data', {
+    temperature: arrayDatos[0],
+    methane: arrayDatos[1]
+  });
 	//console.log(data);
 });
 
